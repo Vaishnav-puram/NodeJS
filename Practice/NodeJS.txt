@@ -1,0 +1,8 @@
+NodeJS is a run-time evironment for JavaScript.
+With NodeJS we can use JS on server side.
+NodeJS buiLt on Chrome's V8 Engine.
+NodeJS uses --- Data Streaming applications --Netflix , Instagram ,Real time chat applications -- whatsapp,I/O bound.
+NodeJS is a single threaded.
+NodeJS is a non-blocking ie., it can accept multiple requests at-a-time.
+
+
