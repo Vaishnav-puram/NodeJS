@@ -1,4 +1,5 @@
 const mongoose=require("mongoose");
+const validator=require("validator");
 
 //connection creation and creation of new database if you provide a new name other than the name present in database
 mongoose.connect("mongodb://localhost:27017/Demo")
@@ -21,7 +22,7 @@ const studentSchema=new mongoose.Schema(
         age:{
             type:Number,
             required:true,
-            validate(value){
+            validate(value){ //custom validation
                 if(value<=0){
                     throw new Error("age shouldn't be negative!!!")
                 }
@@ -29,6 +30,14 @@ const studentSchema=new mongoose.Schema(
         },
         id:{
             type:Number
+        },
+        email:{
+            type:String,
+            validate(value){ //validation through validator 
+                if(!validator.isEmail(value)){
+                    throw new Error("not a valid email format!!!!!")
+                }
+            }
         }
     }
 );
@@ -55,45 +64,50 @@ const createDoc=async ()=>{
             {
                 name:"david",
                 age:23,
-                id:23244
+                id:23244,
+                email:"aaa@gmail.com"
             }
         )
         const document2=new Student(
             {
                 name:"arjun",
                 age:29,
-                id:34222
+                id:34222,
+                email:"bbb@gmail.com"
             }
         )
         const document3=new Student(
             {
                 name:"bhargav",
                 age:33,
-                id:23441
+                id:23441,
+                email:"ccc@gmail.com"
             }
         )
         const document4=new Student(
             {
                 name:"kiran",
                 age:30,
-                id:42213
+                id:42213,
+                email:"ddd@gmail.com"
             }
         )
-        const document5=new Student(
-            {
-                name:"fafa",
-                age:-2, //error in creation since we made a validate schema where age shouldn't be -ve
-                id:42216
-            }
-        )
-        const result=await Student.insertMany([document1,document2,document3,document4,document5]);
+        // const document5=new Student(
+        //     {
+        //         name:"fafa",
+        //         age:-23, //error in creation since we made a validate schema where age shouldn't be -ve
+        //         id:42216,
+        //         email:"eee@com" //error in creation because not a valid email format
+        //     }
+        // )
+        const result=await Student.insertMany([document1,document2,document3,document4]);
         console.log(result);
     }catch(err){
         console.log("error in creation")
     }
 }
 
-// createDoc();
+createDoc();
 
 //**************Read Document*******************
 const data=async()=>{
