@@ -14,13 +14,22 @@ const studentSchema=new mongoose.Schema(
     {
         name:{
             type:String,
-            required:true
+            required:true,
+            minlength:[2,"minimum 2 letters required"],
+            maxlength:30
         },
         age:{
             type:Number,
-            required:true
+            required:true,
+            validate(value){
+                if(value<=0){
+                    throw new Error("age shouldn't be negative!!!")
+                }
+            }
         },
-        id:Number
+        id:{
+            type:Number
+        }
     }
 );
 
@@ -70,12 +79,20 @@ const createDoc=async ()=>{
                 id:42213
             }
         )
-        const result=await Student.insertMany([document1,document2,document3,document4]);
+        const document5=new Student(
+            {
+                name:"fafa",
+                age:-2, //error in creation since we made a validate schema where age shouldn't be -ve
+                id:42216
+            }
+        )
+        const result=await Student.insertMany([document1,document2,document3,document4,document5]);
         console.log(result);
     }catch(err){
         console.log("error in creation")
     }
 }
+
 // createDoc();
 
 //**************Read Document*******************
@@ -84,20 +101,60 @@ const data=async()=>{
     // const res=await Student.find();
     const res=await Student.find({name:"david"},{_id:0,name:1}); 
    // console.log(res); //[ { name: 'david' } ]
+
+    //**********comparison*************
     const res1=await Student.find({age:{$lt:23}}) //gt greaterthan, lt lessthan, in present in, 
    // console.log(res1); //[] since no age is lessthan 23 in the collection
     const res2=await Student.find({name:{$in:["david","gagan"]}}) 
    // console.log(res2); //returns david ,gagan document
     const res3=await Student.find({name:{$nin:["david","gagan"]}}) 
     //console.log(res3); //returns everything except david and gagan 
+
+    //******************logical operators******************
     const res4=await Student.find({$or:[{age:23},{name:"gagan"}]})
     //console.log(res4); //returns documents containing age 23 and name gagan
     const res5=await Student.find({$and:[{age:23},{name:"gagan"}]})
     //console.log(res5);//[] since there is no document containing age 23 and name gagan
+
+    //***********counting**************
+    const res6=await Student.find().countDocuments();
+    //console.log(res6) //5 as there are total five documents
+
+    //************sorting**************
+    const res7=await Student.find().select({name:1}).sort({name:1})
+    //console.log(res7) //gives all names in a to z order if.sort({name:-1}) then it gives in z to a order
     }catch(err){
         console.log("documents not found")
     }
 }
-data();
+//data();
+
+
+    //*************UPDATE***************
+const updateDocument=async(_id)=>{
+    try{
+        const res=await Student.updateOne({_id},{$set:{name:"Gagan"} });
+        // console.log(res) //gagan changes to Gagan but it doesn't show changes 
+        const res1=await Student.find();
+        //console.log(res1)
+        const res2=await Student.findByIdAndUpdate({_id},{$set:{name:"Gagan"} });
+        //console.log(res2) //gagan changes to Gagan and it shows the result
+    }
+
+    catch(err){
+        console.log("error in updating document!!!")
+    }
+}
+//updateDocument("62bb0adcd929f95c08a33a68");
+
+    //*************DELETE***************
+const deleteDocument=async(_id)=>{
+   // const res=await Student.deleteOne({_id});
+    //console.log(res); //deletes document but doesn't show
+    const res1=await Student.findByIdAndDelete({_id});
+    console.log(res1); //deletes the document and shows which one got deleted
+}
+
+//deleteDocument("62bc46e8eeb132bdea328f6e");
 
 
