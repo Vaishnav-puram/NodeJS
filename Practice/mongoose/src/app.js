@@ -42,7 +42,7 @@ const studentSchema=new mongoose.Schema(
     }
 );
 
-//*************MODEL  Collection creation**********************
+//*************MODEL -- Collection creation**********************
 const Student=new mongoose.model("Student",studentSchema);
 
 

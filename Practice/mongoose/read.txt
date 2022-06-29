@@ -1,0 +1,30 @@
+RESTAPI--- REpresentational State Transfer Application Program Interface
+
+API --- It is a software that allows two applications to communicate with each other over internet 
+        and through various devices.Every time you use facebook,etc., an API is used
+
+RESTful API --- It is an architectural style for API that uses HTTPS request to access and use data
+
+REST+API=RESTful API
+
+Earlier Client communicates directly with server but now Client communicates with API and API acts as a
+    mediator b/w Client and the server.And the requests are of multiple types: GET,POST,PUT,DELETE.
+    Then server gives response mostly in JSON/XML format.
+
+CREATE -- POST
+READ -- GET
+UPDATE -- PUT , PATCH
+DELETE -- DELETE
+
+REST API has important components one is API methods and next the endpoint
+    example:https://thapatechnical.com/api/users   here users is endpoint
+    Note:the end point should be same , but the methods can be changed based on the situation
+    ex: POST /api.users, GET /api/users, PUT /api/users,PATCH /api/users, DELETE /api/users
+
+
+REST API is stateless -- ie., server doesn't store any State about the Client session on the server-side.
+Stateless means that every HTTPS request happens in a complete isolation.When the Client makes a HTTPS request
+    ,it includes all the info necessary for server to fulfill that request.
+
+
+
