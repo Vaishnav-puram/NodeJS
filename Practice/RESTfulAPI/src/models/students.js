@@ -43,16 +43,3 @@ const studentSchema = new mongoose.Schema(
     }
 );
 
-//*************MODEL -- Collection creation**********************
-const Student=new mongoose.model("Student",studentSchema);
-
-module.exports=Student;
-
-const createDoc=async()=>{
-    try{
-
-    }
-    catch(err){
-        console.log("error in creation....")
-    }
-}
