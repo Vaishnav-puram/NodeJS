@@ -42,9 +42,5 @@ const studentSchema = new mongoose.Schema(
         }
     }
 );
-<<<<<<< HEAD
-=======
-
->>>>>>> 365b6e9 (added CRUD ops by RESTful API'S)
 const Student=new mongoose.model("Student",studentSchema);
 module.exports=Student;
