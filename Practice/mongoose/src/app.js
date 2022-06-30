@@ -107,7 +107,7 @@ const createDoc=async ()=>{
     }
 }
 
-createDoc();
+//createDoc();
 
 //**************Read Document*******************
 const data=async()=>{
